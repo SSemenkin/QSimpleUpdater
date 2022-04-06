@@ -424,6 +424,7 @@ void Updater::setUpdateAvailable(const bool available)
    QMessageBox box;
    box.setTextFormat(Qt::RichText);
    box.setIcon(QMessageBox::Information);
+   box.setWindowIcon(QIcon(":/icons/unity-display-panel.svg"));
 
    if (updateAvailable() && (notifyOnUpdate() || notifyOnFinish()))
    {

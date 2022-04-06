@@ -52,7 +52,7 @@ Downloader::Downloader(QWidget *parent)
    m_mandatoryUpdate = false;
 
    /* Set download directory */
-   m_downloadDir.setPath(QDir::homePath() + "/Downloads/");
+   m_downloadDir.setPath(qApp->applicationDirPath());
 
    /* Make the window look like a modal dialog */
    setWindowIcon(QIcon());
