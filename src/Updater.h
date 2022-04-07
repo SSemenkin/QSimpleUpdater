@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
+#include <QDir>
 
 #include <QSimpleUpdater.h>
 
@@ -79,6 +80,7 @@ public slots:
    void setUseCustomAppcast(const bool customAppcast);
    void setUseCustomInstallProcedures(const bool custom);
    void setMandatoryUpdate(const bool mandatory_update);
+   void setDownloadDirectory(const QString &directory);
 
 private slots:
    void onReply(QNetworkReply *reply);

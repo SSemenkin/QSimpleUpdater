@@ -96,6 +96,7 @@ public slots:
    void setUseCustomAppcast(const QString &url, const bool customAppcast);
    void setUseCustomInstallProcedures(const QString &url, const bool custom);
    void setMandatoryUpdate(const QString &url, const bool mandatory_update);
+   void setDownloadDirectory(const QString &url, const QString &directory);
 
 protected:
    ~QSimpleUpdater();

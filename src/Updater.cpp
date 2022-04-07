@@ -359,7 +359,12 @@ void Updater::setUseCustomInstallProcedures(const bool custom)
  */
 void Updater::setMandatoryUpdate(const bool mandatory_update)
 {
-   m_mandatoryUpdate = mandatory_update;
+    m_mandatoryUpdate = mandatory_update;
+}
+
+void Updater::setDownloadDirectory(const QString &directory)
+{
+    m_downloader->setDownloadDir(directory);
 }
 /**
  * Called when the download of the update definitions file is finished.

@@ -374,7 +374,12 @@ void QSimpleUpdater::setUseCustomInstallProcedures(const QString &url, const boo
 
 void QSimpleUpdater::setMandatoryUpdate(const QString &url, const bool mandatory_update)
 {
-   getUpdater(url)->setMandatoryUpdate(mandatory_update);
+    getUpdater(url)->setMandatoryUpdate(mandatory_update);
+}
+
+void QSimpleUpdater::setDownloadDirectory(const QString &url, const QString &directory)
+{
+    getUpdater(url)->setDownloadDirectory(directory);
 }
 
 /**
