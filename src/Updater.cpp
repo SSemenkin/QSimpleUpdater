@@ -63,7 +63,13 @@ Updater::Updater()
 
    setUserAgentString(QString("%1/%2 (Qt; QSimpleUpdater)").arg(qApp->applicationName(), qApp->applicationVersion()));
 
-   connect(m_downloader, SIGNAL(downloadFinished(QString, QString)), this, SIGNAL(downloadFinished(QString, QString)));
+   connect(m_downloader, &Downloader::downloadFinished, this, [this] (const QString &url, const QString& filepath) {
+       emit downloadFinished(url, filepath);
+       if (m_mandatoryUpdate) {
+           QDesktopServices::openUrl(filepath);
+           QApplication::quit();
+       }
+   });
    connect(m_manager, SIGNAL(finished(QNetworkReply *)), this, SLOT(onReply(QNetworkReply *)));
 }
 
@@ -445,13 +451,14 @@ void Updater::setUpdateAvailable(const bool available)
 
       if (box.exec() == QMessageBox::Yes)
       {
-         if (!openUrl().isEmpty())
+         if (!openUrl().isEmpty()) {
             QDesktopServices::openUrl(QUrl(openUrl()));
+         }
 
          else if (downloaderEnabled())
          {
             m_downloader->setUrlId(url());
-            m_downloader->setFileName(downloadUrl().split("/").last());
+            m_downloader->setFileName(downloadUrl().split("/").last().split("?").first());
             m_downloader->setMandatoryUpdate(m_mandatoryUpdate);
             m_downloader->startDownload(QUrl(downloadUrl()));
          }

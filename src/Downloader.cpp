@@ -130,6 +130,15 @@ void Downloader::startDownload(const QUrl &url)
 
    /* Update UI when download progress changes or download finishes */
    connect(m_reply, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(updateProgress(qint64, qint64)));
+   connect(m_reply, &QNetworkReply::errorOccurred, this, [] (QNetworkReply::NetworkError error) {
+       qDebug() << "error occurred " << error;
+   });
+
+   connect(m_reply, &QNetworkReply::sslErrors, this, [](const QList<QSslError> &errors) {
+       for (const QSslError &error : errors) {
+           qDebug() << "SSL error " << error;
+       }
+   });
    connect(m_reply, SIGNAL(finished()), this, SLOT(finished()));
 
    showNormal();
@@ -157,6 +166,7 @@ void Downloader::setUserAgentString(const QString &agent)
 void Downloader::finished()
 {
    /* Rename file */
+   QFile::rename(m_downloadDir.filePath(m_fileName), m_downloadDir.filePath(m_fileName + ".bak"));
    QFile::rename(m_downloadDir.filePath(m_fileName + PARTIAL_DOWN), m_downloadDir.filePath(m_fileName));
 
    /* Notify application */
@@ -296,6 +306,7 @@ void Downloader::saveFile(qint64 received, qint64 total)
    if (file.open(QIODevice::WriteOnly | QIODevice::Append))
    {
       file.write(m_reply->readAll());
+      file.flush();
       file.close();
    }
 }
