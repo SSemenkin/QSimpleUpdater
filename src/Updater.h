@@ -69,6 +69,7 @@ public:
 
 public slots:
    void checkForUpdates();
+   void manualUpdate();
    void setUrl(const QString &url);
    void setModuleName(const QString &name);
    void setNotifyOnUpdate(const bool notify);

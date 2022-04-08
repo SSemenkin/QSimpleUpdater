@@ -249,6 +249,16 @@ void Updater::checkForUpdates()
    m_manager->get(request);
 }
 
+void Updater::manualUpdate()
+{
+    if (updateAvailable() && downloaderEnabled()) {
+        m_downloader->setUrlId(url());
+        m_downloader->setFileName(downloadUrl().split("/").last().split("?").first());
+        m_downloader->setMandatoryUpdate(m_mandatoryUpdate);
+        m_downloader->startDownload(QUrl(downloadUrl()));
+    }
+}
+
 /**
  * Changes the \c url in which the \c Updater can find the update definitions
  * file.

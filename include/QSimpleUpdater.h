@@ -102,6 +102,7 @@ protected:
    ~QSimpleUpdater();
 
 private:
+   friend class UpdateChecker;
    Updater *getUpdater(const QString &url) const;
 };
 
